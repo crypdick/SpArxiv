@@ -2,7 +2,7 @@ from pyspark import SparkContext
 sc = SparkContext("local[*]", "App Name")
 
 def split_line(line):
-    strings = line.split()
+    strings = line.split(',')
     return (strings[0], strings[1], int(strings[2]), int(strings[3]))
 
 def extract_population(data_point):
