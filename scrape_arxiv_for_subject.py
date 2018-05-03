@@ -14,9 +14,13 @@ def read_in_for_scraper():
         return content
 
 def pull_subject_single_id(id):
-    req = requests.get(BASE_URL + id)
-    c = req.content
-    return c
+    try:
+        req = requests.get(BASE_URL + id)
+        c = req.content
+        return c
+    except:
+        print("request didnt complete")
+        return None
 
 def pull_subject_from_content(content):
     try:
