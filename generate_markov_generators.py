@@ -11,7 +11,7 @@ def split_line(line):
     """all_abracts.csv has file_name, abstract
     let's just grab abstracts for now"""
     try:
-        strings = line.split(',')
+        strings = line.split(',', 1)
         return str(strings[1])
     except:
         pass
