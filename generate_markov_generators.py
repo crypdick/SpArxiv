@@ -12,8 +12,11 @@ def combine_models(model1, weight1, model2, weight2):
     return markovify.combine([model1, model2], [weight1, weight2])
 
 def split_line(line):
+    """all_abracts.csv has file_name, abstract
+    let's just grab abstracts for now"""
     strings = line.split(',')
-    return (strings[0], strings[1], int(strings[2]), int(strings[3]))
+    return strings[1]
+    #return (strings[0], strings[1])
 
 def extract_population(data_point):
     return (data_point[3], 1)
@@ -25,9 +28,9 @@ def add_pops(pop_pairA, pop_pairB):
     countB = pop_pairB[1]
     return (popA + popB, countA + countB)
 
-line_set = sc.textFile("./states.csv")
-split_lines = line_set.map(split_line)
-pop_pairs = split_lines.map(extract_population)
+abstracts = sc.textFile("./results/all_abstracts.csv")
+abstracts = abstracts.map(split_line)
+pop_pairs = abstracts.map(extract_population)
 total_pop, total_count = pop_pairs.reduce(add_pops)
 
 print("The average population is:")
