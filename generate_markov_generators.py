@@ -9,7 +9,7 @@ def text_to_model(text):
     '''given an abstract, train a markov model
 
     the 1 will be used for weights, later'''
-    return (markovify.Text(text, state_size=STATE_SIZE), 1)
+    return (markovify.Text(text, state_size=STATE_SIZE, retain_original=False), 1)
 
 
 def combine_models(model1, weight1, model2, weight2):
