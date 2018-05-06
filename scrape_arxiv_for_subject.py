@@ -33,16 +33,16 @@ def pull_subject_from_content(content):
         return None
 
 if __name__ == "__main__":
+    total = 16862
     id_to_subject = []
     test_ids = read_in_for_scraper()
+    test_ids = test_ids[11:20]
     for test_id in test_ids:
-        time.sleep(1) #sleep for one second
         content = pull_subject_single_id(test_id)
         subject = pull_subject_from_content(content)
         if subject != None:
             id_to_subject.append((test_id, subject))
-    with open('all_subjects.csv','w') as out:
+    with open('all_subjects.csv','a') as out:
         csv_out=csv.writer(out)
-        csv_out.writerow(['file','subject'])
-        for row in file_abstract:
+        for row in id_to_subject:
                 csv_out.writerow(row)
