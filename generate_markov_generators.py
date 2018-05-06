@@ -12,16 +12,15 @@ def split_line(line):
     let's just grab abstracts for now"""
     try:
         strings = line.split(',')
-        return strings[1]
-    except IndexError:  # there's some fuckery in our CSV
+        return str(strings[1])
+    except:
         pass
-    except AttributeError:  # abstract is Nonetype
-        pass
-    #return (strings[0], strings[1])
-
 
 def at_least_20_words(text):
-    return len(text.split()) >= 20
+    try:
+        return len(text.split()) >= 20
+    except:  # for some reason we have some None's here
+        pass
 
 def text_to_model(text):
     '''given an abstract, train a markov model
