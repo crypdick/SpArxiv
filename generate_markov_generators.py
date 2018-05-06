@@ -10,8 +10,8 @@ SAVE_MODELS = True
 def split_line(line):
     """all_abracts.csv has file_name, abstract
     let's just grab abstracts for now"""
-    strings = line.split(',')
     try:
+        strings = line.split(',')
         return strings[1]
     except IndexError:  # there's some fuckery in our CSV
         pass
