@@ -30,7 +30,9 @@ def text_to_model(text):
     return (markovify.Text(text, state_size=STATE_SIZE, retain_original=False), 1)
 
 
-def combine_models(model1, weight1, model2, weight2):
+def combine_models(model1_tup, model2_tup):
+    model1, weight1 = model1_tup
+    model2, weight2 = model2_tup
     combined_model = markovify.combine([model1, model2], [weight1, weight2])
     combined_weight = weight1 + weight2
     return (combined_model, combined_weight)
