@@ -47,9 +47,11 @@ def model_to_json(model):
 abstracts = sc.textFile("./results/all_abstracts.csv")
 abstracts = abstracts.map(split_line)
 abstracts = abstracts.filter(at_least_20_words)
+print(abstracts.top(1))
 # TODO strip out all latex code so that we have only English
 models = abstracts.map(text_to_model)
 models = models.reduce(combine_models)
+# TODO: save to JSON
 
 # # Print five randomly-generated sentences
 # for i in range(5):
