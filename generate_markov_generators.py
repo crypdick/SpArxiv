@@ -3,6 +3,10 @@ import markovify
 
 sc = SparkContext("local[*]", "App Name")
 
+
+def combine_models(model1, weight1, model2, weight2):
+    return markovify.combine([model1, model2], [weight1, weight2])
+
 def split_line(line):
     strings = line.split(',')
     return (strings[0], strings[1], int(strings[2]), int(strings[3]))
@@ -41,8 +45,3 @@ for i in range(5):
 for i in range(3):
     print(text_model.make_short_sentence(140))
 
-# combinging models
-model_a = markovify.Text(text_a)
-model_b = markovify.Text(text_b)
-
-model_combo = markovify.combine([ model_a, model_b ], [ 1.5, 1 ])
