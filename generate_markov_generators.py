@@ -4,6 +4,7 @@ import markovify
 sc = SparkContext("local[*]", "App Name")
 
 STATE_SIZE = 2
+SAVE_MODELS = True
 
 def text_to_model(text):
     '''given an abstract, train a markov model
@@ -13,7 +14,7 @@ def text_to_model(text):
 
 
 def combine_models(model1, weight1, model2, weight2):
-    combined_model = markovify.combine([model1, model2], [weight1, weighgstt2])
+    combined_model = markovify.combine([model1, model2], [weight1, weight2])
     combined_weight = weight1 + weight2
     return (combined_model, combined_weight)
 
@@ -27,12 +28,13 @@ def split_line(line):
 def extract_population(data_point):
     return (data_point[3], 1)
 
-def add_pops(pop_pairA, pop_pairB):
-    popA = pop_pairA[0]
-    countA = pop_pairA[1]
-    popB = pop_pairB[0]
-    countB = pop_pairB[1]
-    return (popA + popB, countA + countB)
+def model_to_json(model):
+    jsonified = model.to_json()
+    if SAVE_MODELS:
+        obj = open('model1.json', 'wb')
+        obj.write(jsonified)
+        obj.close
+
 
 abstracts = sc.textFile("./results/all_abstracts.csv")
 abstracts = abstracts.map(split_line)
