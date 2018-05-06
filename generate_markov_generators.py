@@ -39,14 +39,6 @@ abstracts = abstracts.map(split_line)
 models = abstracts.map(text_to_model)
 models = models.reduce(combine_models)
 
-print("The average population is:")
-print(total_pop/total_count)
-
-
-# Get raw text as string.
-with open("/path/to/my/corpus.txt") as f:
-    text = f.read()
-
 # # Print five randomly-generated sentences
 # for i in range(5):
 #     print(text_model.make_sentence())
