@@ -11,7 +11,10 @@ def split_line(line):
     """all_abracts.csv has file_name, abstract
     let's just grab abstracts for now"""
     strings = line.split(',')
-    return strings[1]
+    try:
+        return strings[1]
+    except IndexError:  # there's some fuckery in our CSV
+        pass
     #return (strings[0], strings[1])
 
 
@@ -41,6 +44,7 @@ def model_to_json(model):
 abstracts = sc.textFile("./results/all_abstracts.csv")
 abstracts = abstracts.map(split_line)
 abstracts = abstracts.filter(at_least_20_words)
+# TODO strip out all latex code so that we have only English
 models = abstracts.map(text_to_model)
 models = models.reduce(combine_models)
 
