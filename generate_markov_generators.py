@@ -15,6 +15,8 @@ def split_line(line):
         return strings[1]
     except IndexError:  # there's some fuckery in our CSV
         pass
+    except AttributeError:  # abstract is Nonetype
+        pass
     #return (strings[0], strings[1])
 
 
