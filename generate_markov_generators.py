@@ -3,13 +3,19 @@ import markovify
 
 sc = SparkContext("local[*]", "App Name")
 
-def map_text_to_model(text):
-    '''given an abstract, train a markov model'''
-    return markovify.Text(text)
+STATE_SIZE = 2
+
+def text_to_model(text):
+    '''given an abstract, train a markov model
+
+    the 1 will be used for weights, later'''
+    return (markovify.Text(text, state_size=STATE_SIZE), 1)
 
 
 def combine_models(model1, weight1, model2, weight2):
-    return markovify.combine([model1, model2], [weight1, weight2])
+    combined_model = markovify.combine([model1, model2], [weight1, weighgstt2])
+    combined_weight = weight1 + weight2
+    return (combined_model, combined_weight)
 
 def split_line(line):
     """all_abracts.csv has file_name, abstract
@@ -30,8 +36,8 @@ def add_pops(pop_pairA, pop_pairB):
 
 abstracts = sc.textFile("./results/all_abstracts.csv")
 abstracts = abstracts.map(split_line)
-pop_pairs = abstracts.map(extract_population)
-total_pop, total_count = pop_pairs.reduce(add_pops)
+models = abstracts.map(text_to_model)
+models = models.reduce(combine_models)
 
 print("The average population is:")
 print(total_pop/total_count)
