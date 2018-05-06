@@ -26,15 +26,15 @@ def text_to_model(text):
     '''given an abstract, train a markov model
 
     the 1 will be used for weights, later'''
-    return (markovify.Text(text, state_size=STATE_SIZE, retain_original=False), 1)
+    return ("_", (markovify.Text(text, state_size=STATE_SIZE, retain_original=False), 1))
 
 
 def combine_models(model1_tup, model2_tup):
-    model1, weight1 = model1_tup
-    model2, weight2 = model2_tup
+    _, (model1, weight1) = model1_tup
+    _, (model2, weight2) = model2_tup
     combined_model = markovify.combine([model1, model2], [weight1, weight2])
     combined_weight = weight1 + weight2
-    return (combined_model, combined_weight)
+    return ("_", (combined_model, combined_weight))
 
 def model_to_json(model):
     jsonified = model.to_json()
