@@ -3,6 +3,10 @@ import markovify
 
 sc = SparkContext("local[*]", "App Name")
 
+def map_text_to_model(text):
+    '''given an abstract, train a markov model'''
+    return markovify.Text(text)
+
 
 def combine_models(model1, weight1, model2, weight2):
     return markovify.combine([model1, model2], [weight1, weight2])
@@ -34,14 +38,11 @@ print(total_pop/total_count)
 with open("/path/to/my/corpus.txt") as f:
     text = f.read()
 
-# Build the model.
-text_model = markovify.Text(text)
-
-# Print five randomly-generated sentences
-for i in range(5):
-    print(text_model.make_sentence())
-
-# Print three randomly-generated sentences of no more than 140 characters
-for i in range(3):
-    print(text_model.make_short_sentence(140))
+# # Print five randomly-generated sentences
+# for i in range(5):
+#     print(text_model.make_sentence())
+#
+# # Print three randomly-generated sentences of no more than 140 characters
+# for i in range(3):
+#     print(text_model.make_short_sentence(140))
 
