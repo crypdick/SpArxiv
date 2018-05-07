@@ -3,7 +3,7 @@ import markovify
 
 sc = SparkContext(appName='SparkSpeechGenereator')
 
-STATE_SIZE = 6
+STATE_SIZE = 1
 SAVE_MODELS = True
 ABSTRACTS_FILE = "./results/all_abstracts-RICHARD.csv"
 
@@ -65,7 +65,8 @@ def combine_models(models_list):
     return "_", combined_json
 
 
-def model_to_json(model_name, model_json):
+def model_to_json(_, model):
+    model_name, model_json = model
     if SAVE_MODELS:
         fname = open('./models/{}_model.json'.format(model_name), 'w')
         fname.write(model_json)
