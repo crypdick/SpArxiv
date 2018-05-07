@@ -57,10 +57,10 @@ def combine_models(models_list):
 
     # hella redundant but combine() method only smashes 2 models at a time
     combined_model = reconstituted_models.pop()
-    weights = [1., 1.]
+    #weights = [1., 1.]
     for model in reconstituted_models:
-        combined_model = markovify.combine([model, combined_model], weights)
-        weights[-1] += 1
+        combined_model = markovify.combine([model, combined_model]) #, weights)
+        #weights[-1] += 1
     combined_json = str(combined_model.to_json())
     # TODO: change key for category
     return "_", combined_json
