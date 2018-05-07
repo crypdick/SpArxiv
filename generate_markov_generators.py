@@ -78,13 +78,6 @@ abstracts = abstracts.filter(lambda text: text is not None)
 abstracts = abstracts.filter(lambda text: len(text) >= 20)
 print(abstracts.top(1))
 models = abstracts.map(text_to_model)
-models = models.reduce(combine_models)
-# TODO: save to JSON
+combine_models = models.reduceByKey(combine_models)
+models.reduce(model_to_json)
 
-# # Print five randomly-generated sentences
-# for i in range(5):
-#     print(text_model.make_sentence())
-#
-# # Print three randomly-generated sentences of no more than 140 characters
-# for i in range(3):
-#     print(text_model.make_short_sentence(140))
