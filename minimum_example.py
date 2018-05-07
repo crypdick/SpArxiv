@@ -70,6 +70,7 @@ def combine_models(models_list):
         combined_model = markovify.combine([model, combined_model], weights)
         weights[-1] += 1
     combined_json = str(combined_model.to_json())
+    print(combined_json)
     # TODO: change key for category
     return "_", combined_json
 
