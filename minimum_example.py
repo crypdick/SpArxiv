@@ -1,7 +1,7 @@
 import markovify
 
 
-STATE_SIZE = 2  # TODO: raise this once we are near the end
+STATE_SIZE = 6
 SAVE_MODELS = True
 
 
