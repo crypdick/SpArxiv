@@ -3,7 +3,7 @@ import markovify
 
 sc = SparkContext(appName='SparkSpeechGenereator')
 
-STATE_SIZE = 2
+STATE_SIZE = 2  # TODO: raise this once we are near the end
 SAVE_MODELS = True
 
 

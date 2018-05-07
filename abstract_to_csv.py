@@ -17,6 +17,7 @@ def main():
                     #find abstract
                     abstract = str(soup.find('abstract'))
                     if abstract is not None:
+                        # TODO FIXME: comment out once we want to generate math
                         # delete Latex formatting
                         abstract = re.sub(r'\\begin\{.*?}(\[.*?\])?({.*?})?', '', abstract)
                         abstract = re.sub(r'\\end\{.*?}', '', abstract)
