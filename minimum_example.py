@@ -77,10 +77,10 @@ def combine_models(models_list):
 def model_to_json(model):
     if SAVE_MODELS:
         print("saved with count {}".format(model[2]))
-        model_json = model[1]
-        obj = open('model1.json', 'wb')
-        obj.write(model_json)
-        obj.close
+        model_name, model_json = model
+        fname = open('{}_model.json'.format(model_name), 'wb')
+        fname.write(model_json)
+        fname.close
 
 models = []
 with open("./results/all_abstracts-RICHARD.csv") as abstracts:
