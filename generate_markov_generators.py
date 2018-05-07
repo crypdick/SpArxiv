@@ -3,7 +3,7 @@ import markovify
 
 sc = SparkContext(appName='SparkSpeechGenereator')
 
-STATE_SIZE = 1
+STATE_SIZE = 10
 SAVE_MODELS = True
 ABSTRACTS_FILE = "./results/all_abstracts-RICHARD.csv"
 
