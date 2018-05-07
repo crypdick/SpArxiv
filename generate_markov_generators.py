@@ -31,12 +31,14 @@ def split_line(line):
 def combine_abstract_text(text1, text2):
     """markovify works best when each corpus is a single huge string. theefore,
     reduce by key here"""
+    print(text1[:20], text2[:20])
     return text1+text2
 
-def text_to_model(text):
+def text_to_model(tup):
     '''given an abstract, train a markov model
 
     the 1 will be used for weights, later'''
+    _, text = tup
     try:
         # retain_original set to False to save lots of RAM
         text_model = markovify.Text(text, state_size=STATE_SIZE, \
@@ -46,16 +48,17 @@ def text_to_model(text):
         # this makes a Text type object, so we coerce to str
         model_json = str(text_model.to_json())
         # TODO: change key for category
-        return "_", model_json
+        return _, model_json
     except:
         # TODO FIXME: many articles being lost due to illegal characters. see issue tracker.
-        print("model skipped in text_to_model:", text)
+        print("model skipped in text_to_model:", text[:50])
         pass
 
 
 def combine_models(model_1, model_2):
-    unzipped = zip(models_list)
-    _ = []
+    """this should come in with no key"""
+    print("mod1", model_1[:10])
+    print("mod2", model_2[:10])
     jsons = []
     for tup in unzipped:
         tup = tup[0]  # unnest 1 level
@@ -65,7 +68,7 @@ def combine_models(model_1, model_2):
             _name, json = tup
             jsons.append(json)
         except ValueError:
-            print(tup)
+            print("combining failed", tup)
 
     # reconstitute classes from json
     reconstituted_models = [markovify.Text.from_json(json_i) for json_i in jsons]
@@ -85,21 +88,27 @@ def model_to_json(_, model):
     try:
         model_name, model_json = model
     except TypeError:  # TODO FIXME somehow STILL Nonetypes leaking through
+        print("model was a Nonetype, not saving squat")
         return None
     if SAVE_MODELS:
         fname = open('./models/{}_model.json'.format(model_name), 'w')
         fname.write(model_json)
         fname.close
+        print("wrote json to disk for model {}".format(model_name))
 
 
 abstracts = sc.textFile(ABSTRACTS_FILE)
 abstracts = abstracts.map(clean_text_for_markovify)
 abstracts = abstracts.map(split_line)
-abstracts = abstracts.filter(lambda _, text: text is not None)
-abstracts = abstracts.filter(lambda _, text: len(text) >= 12)
-abstracts = abstracts.reduceByKey(combine_abstract_text)
-print(abstracts)
+abstracts = abstracts.filter(lambda tup: tup[1] is not None)
+abstracts = abstracts.filter(lambda tup: len(tup[1]) >= 12)
+#print(abstracts.take(1))
+abstracts = abstracts.reduceByKey(lambda text1, text2: text1+text2)
+abstracts.persist()  # do not lose RDD after next line
+print("# of words in each key/corpus: ", abstracts.map(lambda tup: len(tup[1])).collect())
 models = abstracts.map(text_to_model)
-combine_models = models.reduceByKey(combine_models)
+#print(models.take(1))
+#combined_models = models.reduceByKey(combine_models)
+#print(combined_models.take(1))
 models.map(model_to_json)  # FIXME should probably use rdd.saveAsTextFile instead
 
