@@ -30,8 +30,11 @@ def text_to_model(text):
     the 1 will be used for weights, later'''
     text_model = markovify.Text(text, state_size=STATE_SIZE,
                                 retain_original=False)
+
     # class is not serializable, so extract json first
-    model_json = text_model.to_json()
+    # this makes a Text type object, so we coerce to str
+    model_json = str(text_model.to_json())
+    print(model_json)
     return "_", (model_json, 1)
 
 
