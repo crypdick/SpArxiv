@@ -84,7 +84,7 @@ def combine_models(model_1, model_2):
     return "_", combined_json
 
 
-def model_to_json(_, model):
+def model_to_json(model):
     try:
         model_name, model_json = model
     except TypeError:  # TODO FIXME somehow STILL Nonetypes leaking through
@@ -110,5 +110,8 @@ models = abstracts.map(text_to_model)
 #print(models.take(1))
 #combined_models = models.reduceByKey(combine_models)
 #print(combined_models.take(1))
-models.map(model_to_json)  # FIXME should probably use rdd.saveAsTextFile instead
+# I like this function better, except is isnt' working anymore and I can't figure out why
+#models.map(model_to_json)  
+# rdd.saveAsTextFile saves as tuples, which sucks
+models.saveAsTextFile("models/")
 
