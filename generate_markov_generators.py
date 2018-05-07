@@ -28,6 +28,11 @@ def split_line(line):
         print("line skipped in split_line")
         pass
 
+def combine_abstract_text(text1, text2):
+    """markovify works best when each corpus is a single huge string. theefore,
+    reduce by key here"""
+    print(text1)
+    print("text2", text2)
 
 def text_to_model(text):
     '''given an abstract, train a markov model
@@ -93,6 +98,7 @@ abstracts = abstracts.map(clean_text_for_markovify)
 abstracts = abstracts.map(split_line)
 abstracts = abstracts.filter(lambda text: text is not None)
 abstracts = abstracts.filter(lambda text: len(text) >= 20)
+abstracts = abstracts.reduceByKey(combine_abstract_text)
 models = abstracts.map(text_to_model)
 combine_models = models.reduceByKey(combine_models)
 models.reduce(model_to_json)
