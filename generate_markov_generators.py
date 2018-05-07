@@ -65,9 +65,8 @@ def combine_models(models_list):
     return "_", combined_json
 
 
-def model_to_json(model):
+def model_to_json(model_name, model_json):
     if SAVE_MODELS:
-        model_name, model_json = model
         fname = open('./models/{}_model.json'.format(model_name), 'w')
         fname.write(model_json)
         fname.close
