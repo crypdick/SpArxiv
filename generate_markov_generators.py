@@ -34,19 +34,21 @@ def text_to_model(text):
     # class is not serializable, so extract json first
     # this makes a Text type object, so we coerce to str
     model_json = str(text_model.to_json())
-    return "_", (model_json, 1)
+    # TODO: change key for category
+    return "_", model_json, 1
 
 
 def combine_models(model1_tup, model2_tup):
-    _, (model1_json, weight1) = model1_tup
-    _, (model2_json, weight2) = model2_tup
+    _, model1_json, weight1 = model1_tup
+    _, model2_json, weight2 = model2_tup
     # reconstitute classes from json
     model1 = markovify.Text.from_json(model1_json)
     model2 = markovify.Text.from_json(model2_json)
     combined_model = markovify.combine([model1, model2], [weight1, weight2])
     model_json = str(combined_model.to_json())
     combined_weight = weight1 + weight2
-    return "_", (model_json, combined_weight)
+    # TODO: change key for category
+    return "_", model_json, combined_weight
 
 
 def model_to_json(model):
