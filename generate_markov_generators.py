@@ -13,15 +13,8 @@ def split_line(line):
     try:
         strings = line.split(',', 1)
         return str(strings[1])
-    except:
-        pass
-
-
-def at_least_20_words(text):
-    try:
-        return len(text.split()) >= 20
-    except:  # for some reason we have some None's here
-        pass
+    #except:
+    #    pass
 
 
 def text_to_model(text):

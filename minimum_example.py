@@ -16,10 +16,11 @@ def split_line(line):
 
 
 def at_least_20_words(text):
-    try:
-        return len(text.split()) >= 20
-    except:  # for some reason we have some None's here
-        pass
+    if text is None:
+        return False
+    return len(text.split()) >= 20
+    #except:  # for some reason we have some None's here
+    #    pass
 
 
 def text_to_model(text):
@@ -33,7 +34,6 @@ def text_to_model(text):
         # this makes a Text type object, so we coerce to str
         model_json = str(text_model.to_json())
         # TODO: change key for category
-        #print("success")
         return "_", model_json
     #except KeyError:
     #l    pass
@@ -70,16 +70,14 @@ def combine_models(models_list):
         combined_model = markovify.combine([model, combined_model], weights)
         weights[-1] += 1
     combined_json = str(combined_model.to_json())
-    print(combined_json)
     # TODO: change key for category
     return "_", combined_json
 
 
 def model_to_json(model):
     if SAVE_MODELS:
-        print("saved with count {}".format(model[2]))
         model_name, model_json = model
-        fname = open('{}_model.json'.format(model_name), 'wb')
+        fname = open('./models/{}_model.json'.format(model_name), 'wb')
         fname.write(model_json)
         fname.close
 
@@ -91,7 +89,7 @@ with open("./results/all_abstracts-RICHARD.csv") as abstracts:
         #print(abstract)
         #if not abstract: # Nonetype
         #    continue
-        if len(abstract) <= 20:
+        if len(abstract) <= 20 or abstract is None:
             continue
         models.append(text_to_model(abstract))
     combined = combine_models(models)
