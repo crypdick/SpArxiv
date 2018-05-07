@@ -23,6 +23,7 @@ def text_to_model(text):
 
     the 1 will be used for weights, later'''
     try:
+        # retain_original set to False to save lots of RAM
         text_model = markovify.Text(text, state_size=STATE_SIZE, \
                                     retain_original=False)
 
