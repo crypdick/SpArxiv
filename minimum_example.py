@@ -27,14 +27,14 @@ def text_to_model(text):
 
     the 1 will be used for weights, later'''
     try:
-        text_model = markovify.Text(text, state_size=STATE_SIZE)
+        text_model = markovify.Text(text, state_size=STATE_SIZE, retain_original=False)
 
         # class is not serializable, so extract json first
         # this makes a Text type object, so we coerce to str
         model_json = str(text_model.to_json())
         # TODO: change key for category
         #print("success")
-        return "_", model_json, 1
+        return "_", model_json
     #except KeyError:
     #l    pass
     #except TypeError:  # recieved Nonetype
@@ -47,17 +47,31 @@ def text_to_model(text):
 
 
 def combine_models(models_list):
-    _, jsons, weights = [list(a) for a in zip(models_list)]
+    unzipped = zip(models_list)
+    _ = []
+    jsons = []
+    for tup in unzipped:
+        tup = tup[0]  # unnest 1 level
+        if tup is None:
+            continue  # FIXME I don't know how these Nonetypes keep sneaking in
+        try:
+            _name, json = tup
+            jsons.append(json)
+        except ValueError:
+            print(tup)
 
     # reconstitute classes from json
     reconstituted_models = [markovify.Text.from_json(json_i) for json_i in jsons]
 
-    combined_model = markovify.combine([reconstituted_models], [weights])
+    # hella redundant but combine() method only smashes 2 models at a time
+    combined_model = reconstituted_models.pop()
+    weights = [1., 1.]
+    for model in reconstituted_models:
+        combined_model = markovify.combine([model, combined_model], weights)
+        weights[-1] += 1
     combined_json = str(combined_model.to_json())
-    combined_weights = sum(weights)
-    print("combined weight: {}".format(combined_weights))
     # TODO: change key for category
-    return "_", combined_json, combined_weights
+    return "_", combined_json
 
 
 def model_to_json(model):
