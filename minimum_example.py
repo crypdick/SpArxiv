@@ -84,14 +84,15 @@ def model_to_json(model):
 models = []
 with open("./results/all_abstracts-RICHARD.csv") as abstracts:
     count = 1
-    for abstract in abstracts.readlines():
-        abstract = split_line(abstract)
-        #print(abstract)
-        #if not abstract: # Nonetype
-        #    continue
-        if len(abstract) <= 20 or abstract is None:
-            continue
-        models.append(text_to_model(abstract))
+    while count < 50:
+        for abstract in abstracts.readlines():
+            abstract = split_line(abstract)
+            #print(abstract)
+            #if not abstract: # Nonetype
+            #    continue
+            if len(abstract) <= 20 or abstract is None:
+                continue
+            models.append(text_to_model(abstract))
     combined = combine_models(models)
     model_to_json(combined)
 
