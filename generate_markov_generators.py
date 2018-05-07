@@ -25,6 +25,7 @@ def split_line(line):
         # TODO: return category of the text
         return str(strings[1])
     except:
+        print("line skipped in split_line")
         pass
 
 
@@ -44,7 +45,7 @@ def text_to_model(text):
         return "_", model_json
     except:
         # TODO FIXME: many articles being lost due to illegal characters. see issue tracker.
-        #print(text)
+        print("model skipped in text_to_model:", text)
         pass
 
 
