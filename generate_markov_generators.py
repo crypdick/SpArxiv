@@ -3,7 +3,7 @@ import markovify
 
 sc = SparkContext(appName='SparkSpeechGenereator')
 
-STATE_SIZE = 4
+STATE_SIZE = 3
 SAVE_MODELS = True
 ABSTRACTS_FILE = "./results/all_abstracts-RICHARD.csv"
 
@@ -53,7 +53,7 @@ def text_to_model(text):
         pass
 
 
-def combine_models(models_list):
+def combine_models(model_1, model_2):
     unzipped = zip(models_list)
     _ = []
     jsons = []
