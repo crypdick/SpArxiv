@@ -34,54 +34,25 @@ def text_to_model(text):
         model_json = str(text_model.to_json())
         # TODO: change key for category
         return "_", model_json, 1
-    except KeyError:
-        pass
+    #except KeyError:
+    #l    pass
     except TypeError:  # recieved Nonetype
         pass
 
 
 
-def combine_models(model1_tup, model2_tup):
-    try:
-        _, model1_json, weight1 = model1_tup
-    except TypeError:
-        try:
-            _, model2_json, weight2 = model2_tup
-            return model2_tup
-        except:
-            return None
-    # if model 1 but not model 2
-    try:
-        _, model2_json, weight2 = model2_tup
-    except:
-        return model1_tup
+def combine_models(models_list):
+    _, jsons, weights = [list(a) for a in zip(models_list)]
 
     # reconstitute classes from json
-    magic_1, magic_2 = 0, 0
-    if model1_json:  # catch Nonetypes
-        model1 = markovify.Text.from_json(model1_json)
-    else:
-        magic_1 = 1
-    if model2_json:
-        model2 = markovify.Text.from_json(model2_json)
-    else:
-        magic_2 = 1
+    reconstituted_models = [markovify.Text.from_json(json_i) for json_i in jsons]
 
-    if magic_1 + magic_2 == 2:
-        pass
-    elif magic_1 == 1:
-        return "_", model1_json, weight1
-    elif magic_2 == 1:
-        return "_", model2_json, weight2
-
-
-    combined_model = markovify.combine([model1, model2], [weight1, weight2])
-    model_json = str(combined_model.to_json())
-    combined_weight = weight1 + weight2
-    print("combined weight: {}".format(combined_weight))
+    combined_model = markovify.combine([reconstituted_models], [weights])
+    combined_json = str(combined_model.to_json())
+    combined_weights = sum(weights)
+    print("combined weight: {}".format(combined_weights))
     # TODO: change key for category
-    print("here")
-    return "_", model_json, combined_weight
+    return "_", combined_json, combined_weights
 
 
 def model_to_json(model):
@@ -92,17 +63,17 @@ def model_to_json(model):
         obj.write(model_json)
         obj.close
 
-old_model = ("", None, 0)
-with open("./results/all_abstracts.csv") as abstracts:
+models = []
+with open("./results/all_abstracts-RICHARD.csv") as abstracts:
+    count = 1
     for abstract in abstracts.readlines():
         abstract = split_line(abstract)
         if not abstract: # Nonetype
             continue
         if len(abstract) <= 20:
             continue
-        model = text_to_model(abstract)
-        combined = combine_models(old_model, model)
-        old_model = combined
+        models.append(text_to_model(abstract))
+    combined = combine_models(models)
     model_to_json(old_model)
 
 # # Print five randomly-generated sentences
