@@ -33,10 +33,15 @@ def text_to_model(text):
         # this makes a Text type object, so we coerce to str
         model_json = str(text_model.to_json())
         # TODO: change key for category
+        #print("success")
         return "_", model_json, 1
     #except KeyError:
     #l    pass
-    except TypeError:  # recieved Nonetype
+    #except TypeError:  # recieved Nonetype
+    #    pass
+    except:
+        # TODO FIXME: many articles being lost due to illegal characters. see issue tracker.
+        #print(text)
         pass
 
 
@@ -68,13 +73,14 @@ with open("./results/all_abstracts-RICHARD.csv") as abstracts:
     count = 1
     for abstract in abstracts.readlines():
         abstract = split_line(abstract)
-        if not abstract: # Nonetype
-            continue
+        #print(abstract)
+        #if not abstract: # Nonetype
+        #    continue
         if len(abstract) <= 20:
             continue
         models.append(text_to_model(abstract))
     combined = combine_models(models)
-    model_to_json(old_model)
+    model_to_json(combined)
 
 # # Print five randomly-generated sentences
 # for i in range(5):
