@@ -3,7 +3,7 @@ import markovify
 
 sc = SparkContext(appName='SparkSpeechGenereator')
 
-STATE_SIZE = 2  # TODO: raise this once we are near the end
+STATE_SIZE = 6
 SAVE_MODELS = True
 
 
@@ -13,48 +13,69 @@ def split_line(line):
     try:
         strings = line.split(',', 1)
         return str(strings[1])
-    #except:
-    #    pass
+    except:
+        pass
 
 
 def text_to_model(text):
     '''given an abstract, train a markov model
 
     the 1 will be used for weights, later'''
-    text_model = markovify.Text(text, state_size=STATE_SIZE,
-                                retain_original=False)
+    try:
+        text_model = markovify.Text(text, state_size=STATE_SIZE, \
+                                    retain_original=False)
 
-    # class is not serializable, so extract json first
-    # this makes a Text type object, so we coerce to str
-    model_json = str(text_model.to_json())
-    # TODO: change key for category
-    return "_", model_json, 1
+        # class is not serializable, so extract json first
+        # this makes a Text type object, so we coerce to str
+        model_json = str(text_model.to_json())
+        # TODO: change key for category
+        return "_", model_json
+    except:
+        # TODO FIXME: many articles being lost due to illegal characters. see issue tracker.
+        #print(text)
+        pass
 
 
-def combine_models(model1_tup, model2_tup):
-    _, model1_json, weight1 = model1_tup
-    _, model2_json, weight2 = model2_tup
+def combine_models(models_list):
+    unzipped = zip(models_list)
+    _ = []
+    jsons = []
+    for tup in unzipped:
+        tup = tup[0]  # unnest 1 level
+        if tup is None:
+            continue  # FIXME I don't know how these Nonetypes keep sneaking in
+        try:
+            _name, json = tup
+            jsons.append(json)
+        except ValueError:
+            print(tup)
+
     # reconstitute classes from json
-    model1 = markovify.Text.from_json(model1_json)
-    model2 = markovify.Text.from_json(model2_json)
-    combined_model = markovify.combine([model1, model2], [weight1, weight2])
-    model_json = str(combined_model.to_json())
-    combined_weight = weight1 + weight2
+    reconstituted_models = [markovify.Text.from_json(json_i) for json_i in jsons]
+
+    # hella redundant but combine() method only smashes 2 models at a time
+    combined_model = reconstituted_models.pop()
+    weights = [1., 1.]
+    for model in reconstituted_models:
+        combined_model = markovify.combine([model, combined_model], weights)
+        weights[-1] += 1
+    combined_json = str(combined_model.to_json())
     # TODO: change key for category
-    return "_", model_json, combined_weight
+    return "_", combined_json
 
 
 def model_to_json(model):
-    jsonified = model.to_json()
     if SAVE_MODELS:
-        obj = open('model1.json', 'wb')
-        obj.write(jsonified)
-        obj.close
+        model_name, model_json = model
+        fname = open('./models/{}_model.json'.format(model_name), 'w')
+        fname.write(model_json)
+        fname.close
 
 
 abstracts = sc.textFile("./results/all_abstracts.csv")
 abstracts = abstracts.map(split_line)
-abstracts = abstracts.filter(at_least_20_words)
+abstracts = abstracts.filter(lambda text: text is not None)
+abstracts = abstracts.filter(lambda text: len(text) >= 20)
 print(abstracts.top(1))
 models = abstracts.map(text_to_model)
 models = models.reduce(combine_models)
