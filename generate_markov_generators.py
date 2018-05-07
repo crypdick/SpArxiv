@@ -5,6 +5,7 @@ sc = SparkContext(appName='SparkSpeechGenereator')
 
 STATE_SIZE = 6
 SAVE_MODELS = True
+ABSTRACTS_FILE = "./results/all_abstracts-RICHARD.csv"
 
 
 def split_line(line):
@@ -72,11 +73,10 @@ def model_to_json(model):
         fname.close
 
 
-abstracts = sc.textFile("./results/all_abstracts.csv")
+abstracts = sc.textFile(ABSTRACTS_FILE)
 abstracts = abstracts.map(split_line)
 abstracts = abstracts.filter(lambda text: text is not None)
 abstracts = abstracts.filter(lambda text: len(text) >= 20)
-print(abstracts.top(1))
 models = abstracts.map(text_to_model)
 combine_models = models.reduceByKey(combine_models)
 models.reduce(model_to_json)
