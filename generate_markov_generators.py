@@ -7,12 +7,22 @@ STATE_SIZE = 4
 SAVE_MODELS = True
 ABSTRACTS_FILE = "./results/all_abstracts-RICHARD.csv"
 
+def clean_text_for_markovify(text):
+    '''
+    Markovify has a few symbols it hates. we'll filter them
+    https://github.com/jsvine/markovify/blob/master/markovify/text.py#L104
+    '''
+    text = text.replace("'", "").replace('"', "").replace("(", "")\
+        .replace(")", "").replace("[", "").replace("]", "")
+    return text
+
 
 def split_line(line):
     """all_abracts.csv has file_name, abstract
     let's just grab abstracts for now"""
     try:
         strings = line.split(',', 1)
+        # TODO: return category of the text
         return str(strings[1])
     except:
         pass
@@ -78,6 +88,7 @@ def model_to_json(_, model):
 
 
 abstracts = sc.textFile(ABSTRACTS_FILE)
+abstracts = abstracts.map(clean_text_for_markovify)
 abstracts = abstracts.map(split_line)
 abstracts = abstracts.filter(lambda text: text is not None)
 abstracts = abstracts.filter(lambda text: len(text) >= 20)
