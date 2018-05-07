@@ -14,7 +14,8 @@ def main():
                 soup = TexSoup(open(os.path.join(root,f)))
                 #find abstract
                 abstract = str(soup.find('abstract'))
-                file_abstract.append((f, abstract))
+                if abstract is not None:
+                    file_abstract.append((f, abstract))
             except:
                 pass
     with open('all_abstracts.csv','w') as out:
