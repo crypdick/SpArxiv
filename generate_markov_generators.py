@@ -66,7 +66,10 @@ def combine_models(models_list):
 
 
 def model_to_json(_, model):
-    model_name, model_json = model
+    try:
+        model_name, model_json = model
+    except TypeError:  # TODO FIXME somehow STILL Nonetypes leaking through
+        return None
     if SAVE_MODELS:
         fname = open('./models/{}_model.json'.format(model_name), 'w')
         fname.write(model_json)
