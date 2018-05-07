@@ -77,15 +77,15 @@ def combine_models(models_list):
 def model_to_json(model):
     if SAVE_MODELS:
         model_name, model_json = model
-        fname = open('./models/{}_model.json'.format(model_name), 'wb')
+        fname = open('./models/{}_model.json'.format(model_name), 'w')
         fname.write(model_json)
         fname.close
 
 models = []
 with open("./results/all_abstracts-RICHARD.csv") as abstracts:
-    count = 1
-    while count < 50:
+    while len(models) < 5:
         for abstract in abstracts.readlines():
+            print(len(models))
             abstract = split_line(abstract)
             #print(abstract)
             #if not abstract: # Nonetype
@@ -93,6 +93,8 @@ with open("./results/all_abstracts-RICHARD.csv") as abstracts:
             if len(abstract) <= 20 or abstract is None:
                 continue
             models.append(text_to_model(abstract))
+            if len(models) > 5:
+                break
     combined = combine_models(models)
     model_to_json(combined)
 
