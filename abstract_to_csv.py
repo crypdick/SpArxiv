@@ -31,7 +31,7 @@ def main():
                         .replace('\r', '') \
                         .replace('  ', ' ')  # strip double spaces
 
-                    file_abstract.append((f, abstract))g
+                    file_abstract.append((f, abstract))
             except:
                 pass
     with open('all_abstracts.csv', 'w') as out:
