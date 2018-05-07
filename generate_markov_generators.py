@@ -23,7 +23,7 @@ def split_line(line):
     try:
         strings = line.split(',', 1)
         # TODO: return category of the text
-        return str(strings[1])
+        return "_", str(strings[1])
     except:
         print("line skipped in split_line")
         pass
@@ -95,11 +95,11 @@ def model_to_json(_, model):
 abstracts = sc.textFile(ABSTRACTS_FILE)
 abstracts = abstracts.map(clean_text_for_markovify)
 abstracts = abstracts.map(split_line)
-abstracts = abstracts.filter(lambda text: text is not None)
-abstracts = abstracts.filter(lambda text: len(text) >= 12)
-abstracts = abstracts.reduce(combine_abstract_text)
+abstracts = abstracts.filter(lambda _, text: text is not None)
+abstracts = abstracts.filter(lambda _, text: len(text) >= 12)
+abstracts = abstracts.reduceByKey(combine_abstract_text)
 print(abstracts)
 models = abstracts.map(text_to_model)
 combine_models = models.reduceByKey(combine_models)
-models.map(model_to_json)
+models.map(model_to_json)  # FIXME should probably use rdd.saveAsTextFile instead
 
