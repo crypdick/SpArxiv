@@ -113,5 +113,9 @@ models = abstracts.map(text_to_model)
 # I like this function better, except is isnt' working anymore and I can't figure out why
 #models.map(model_to_json)  
 # rdd.saveAsTextFile saves as tuples, which sucks
-models.saveAsTextFile("models/")
+if SAVE_MODELS:
+    model_dir = "models/"
+    from shutil import rmtree
+    rmtree(model_dir)
+    models.saveAsTextFile(model_dir)
 
