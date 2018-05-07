@@ -2,6 +2,7 @@ import csv
 from TexSoup import TexSoup
 import os
 import subprocess, sys
+import re
 
 
 def main():
@@ -10,9 +11,10 @@ def main():
     path = os.listdir('/home/shit/bin/ds_shit/distributed/SpArxiv')
     indir = '/Akamai_scratch/arxiv/outdir3'
     indir = "/home/shit/bin/ds_shit/distributed/SpArxiv"
+
     for root, dirs, filenames in os.walk(indir):
         for f in filenames:
-            if ".tex" in f:
+            if ".tex" in f:  # TODO delet
                 try:
                     #open file
                     soup = TexSoup(open(os.path.join(root,f)))
@@ -20,15 +22,17 @@ def main():
                     abstract = str(soup.find('abstract'))
                     if abstract is not None:
                         # delete Latex formatting
-                        # credit: https://tex.stackexchange.com/a/102404/100323
-                        result = subprocess.run(
-                            [os.path.join(path, "removelatexcode.pl"), abstract], stdout=subprocess.PIPE)
-                        print(result.stdout)
-                        print("jo")
+                        abstract = re.sub(r'\\begin\{.*?}(\[.*?\])?({.*?})?', '', abstract)
+                        abstract = re.sub(r'\\end\{.*?}', '', abstract)
+                        # remove custom named latex commands while keeping the
+                        # stuff inside the braces
+                        abstract = re.sub(r'\\.*?{(.*?)}', r'\1', abstract)
+
 
                         # make abstract one line before append
                         abstract = abstract.replace('\n', ' ')\
-                            .replace('\r', '')
+                            .replace('\r', '')\
+                            .replace('  ', ' ')
 
 
                         file_abstract.append((f, abstract))
