@@ -15,6 +15,14 @@ def main():
                 #find abstract
                 abstract = str(soup.find('abstract'))
                 if abstract is not None:
+                    # delete Latex formatting
+                    # credit: https://tex.stackexchange.com/a/102404/100323
+                    
+                    # make abstract one line before append
+                    abstract = abstract.replace('\n', ' ')\
+                        .replace('\r', '')
+
+
                     file_abstract.append((f, abstract))
             except:
                 pass
