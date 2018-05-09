@@ -33,16 +33,19 @@ def pull_subject_from_content(content):
         return None
 
 if __name__ == "__main__":
-    total = 16862
-    id_to_subject = []
     test_ids = read_in_for_scraper()
-    test_ids = test_ids[11:20]
-    for test_id in test_ids:
-        content = pull_subject_single_id(test_id)
-        subject = pull_subject_from_content(content)
-        if subject != None:
-            id_to_subject.append((test_id, subject))
-    with open('all_subjects.csv','a') as out:
-        csv_out=csv.writer(out)
-        for row in id_to_subject:
-                csv_out.writerow(row)
+    indexes = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000]
+    for index in indexes:
+        print(str(index) + " is the starting index")
+        id_to_subject = []
+        current_ids = test_ids[index:index + 500]
+        for current_id in current_ids:
+            print(str(current_id) + " is the current ID")
+            content = pull_subject_single_id(current_id)
+            subject = pull_subject_from_content(content)
+            if subject != None:
+                id_to_subject.append((current_id, subject))
+        with open('all_subjects.csv','a') as out:
+            csv_out=csv.writer(out)
+            for row in id_to_subject:
+                    csv_out.writerow(row)
