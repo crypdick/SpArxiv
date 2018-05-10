@@ -74,12 +74,12 @@ def combine_models(models_list):
 def model_to_json(model):
     if SAVE_MODELS:
         model_name, model_json = model
-        fname = open('./models/{}_model.json'.format(model_name), 'w')
+        fname = open('./energy_physics_models/{}_model.json'.format(model_name), 'w')
         fname.write(model_json)
         fname.close
 
 models = []
-with open("./results/all_abstracts-RICHARD.csv") as abstracts:
+with open("./results/Energy_Physics_abstracts.csv") as abstracts:
     while len(models) < 5:
         for abstract in abstracts.readlines():
             print(len(models))
