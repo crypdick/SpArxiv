@@ -1,0 +1,64 @@
+---
+title: "Generated Abstracts"
+author: "Saad Usmani"
+date: "May 10, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Num_Anal Model
+
+###Model 4
+
+It is shown that detection and estimation of partially-observed dynamical systems can be performed with little to no knowledge about the background disturbances and with only an upper bound on the probability of detection failure.
+This type of problem occurs in the study of optimal compensation problems involving competing principals.
+To our knowledge, no study has been performed on the enrichment impact of a learning database on the steganalysis performance.
+However, such a formulation usually involves a precise modelling of these adverse effects as well as the setting of the corresponding parameters, which is not always feasible or realistic.
+Yet, a vast majority of the literature regarding Bayesian inference for such systems ignore these undesired effects and assume that pre-processing can be applied to remove them.
+
+#Machine Learning Model
+
+###Model 1
+
+On the basis of this study, we propose and demonstrate experimentally, by femtosecond laser writing, directional couplers that are free from this problem and also yield a polarization independent power-splitting ratio.
+We then investigate Bose-Einstein condensation of pairs and prove, as a main result, the existence of condensation whenever the Hamiltonian has a non-trivial discrete spectrum.
+Unfortunately, there is no single best technique for nonparametric regression.
+Based on our recent results on multichannel metasurfaces, we propose a new concept of asymmetric absorbers in which the absorption coefficient for waves impinging from a given oblique angle is extraordinarily different from that for waves incident from the oppositely tilted direction.
+Instead, we provide a guide for how astronomers can choose the best method for their specific problem and provide a python library with both wrappers for the most useful existing algorithms and implementations of two new algorithms developed here.
+
+
+#Energy Physics Model
+
+
+###Model 3
+
+For the pseudoscalar-pseudoscalar and the vector-vector cases, their unsatisfactory OPE convergence makes that it is of difficulty to find rational work windows to further acquire hadronic masses.
+In particular, we found that the presence of confined water is the main responsible for the observed spectral complexity.
+The grounds of interpretation of Raman spectra in these cases is the isolated macromolecules constituent vibrational assignment.
+Besides some apparent similarities between the surface plasmon frequencies in massless Dirac plasmas and Fermi plasmas, several notable differences are also found and discussed.
+Our results indicated that important spectral features correlated to molecular characteristics have been ignored within the usual tissue spectral bands assignments.
+
+
+#Distributed Model
+
+###Model 5
+
+In this research, we propose NEC2DQN that improves learning speed of a poor sample efficiency algorithm such as DQN by using good one such as NEC at the beginning of learning.
+This occurs because of Maxwell equations acquire a symmetrical structure due to the existence of electric and magnetic charge current densities.
+However, most experimental implementations aiming for high values of the Bell parameter suffer from the defect of showing signaling.
+This signaling can be attributed to systematic errors occurring due to weaknesses in the experimental designs.
+Here we point out the importance, for quantitative applications, to identify and address this problem.
+
+#Crypto Model
+
+###Model 1
+
+Experiments show that MAttNet outperforms previous state-of-art methods by a large margin on both bounding-box-level and pixel-level comprehension tasks.
+This allows us to flexibly adapt to expressions containing different types of information in an end-to-end framework.
+Then, by confinement to weak transformation neighbourhoods and by applying the Cauchy-Born rule we are able to use the symmetries continuum mechanics utilizes: geometric symmetries.
+While the heuristic approaches produce considerable biases even on unrealistically simple images, the reconstruction-based approach accurately measures particle positions even in complex, highly realistic images.
+This is done for the symmetry hierarchies that describe how symmetry changes at the continuum level: $6 \nu 2 \nu \rightarrow \mathcal C_1$ for monoatomic 2-nets and $6 \nu 1 \nu \rightarrow \mathcal C_1$ for diatomic two nets.
+
