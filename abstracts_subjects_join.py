@@ -17,7 +17,10 @@ for index, row in abstract.iterrows():
     #print(file)
     file_list = file.split("_")
     #print(file_list)
-    formated = file_list[0] + "." + file_list[1]
+    try:
+        formated = file_list[0] + "." + file_list[1]
+    except IndexError:
+        formated = ""
     #print(formated[0:10])
     abstract.set_value(index, 'file_format', formated[0:10])
 
