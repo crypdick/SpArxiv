@@ -1,3 +1,7 @@
+"""
+get title, abstract for each file
+"""
+
 import csv
 from TexSoup import TexSoup
 import os
