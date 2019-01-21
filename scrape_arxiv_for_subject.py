@@ -1,3 +1,8 @@
+"""
+this crawls arvix and fetches the subject for each file
+"""
+
+
 import requests
 from bs4 import BeautifulSoup
 import csv
