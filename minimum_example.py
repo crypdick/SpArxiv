@@ -1,3 +1,7 @@
+"""
+an example for using markovify without Spark
+"""
+
 import markovify
 
 
