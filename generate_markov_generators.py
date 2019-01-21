@@ -5,7 +5,7 @@ sc = SparkContext(appName='SparkSpeechGenereator')
 
 STATE_SIZE = 3
 SAVE_MODELS = True
-ABSTRACTS_FILE = "./results/all_abstracts-RICHARD.csv"
+ABSTRACTS_FILE = "./results/Num_anal_abstracts.csv"
 
 def clean_text_for_markovify(text):
     '''

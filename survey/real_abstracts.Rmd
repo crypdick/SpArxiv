@@ -1,0 +1,30 @@
+---
+title: "Real Abstracts"
+author: "Saad Usmani"
+date: "May 10, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Numerical Analysis:
+
+In real environments, it is seldom that physical dynamical systems can be observed without detection failures and without disturbances from the background. Yet, a vast majority of the literature regarding Bayesian inference for such systems ignore these undesired effects and assume that pre-processing can be applied to remove them. To some extent, this goes against the Bayesian philosophy which promotes the integration of the different aspects of the problem into a joint formulation. However, such a formulation usually involves a precise modelling of these adverse effects as well as the setting of the corresponding parameters, which is not always feasible or realistic. In this article, we propose to use outer measures of a certain form to allow for additional flexibility in the modelling of these effects within the Bayesian paradigm. 
+
+#Machine Learning
+
+We study analytically the polarization behaviour of directional couplers composed of birefringent waveguides, showing that they can induce polarization transformations that depend on the specific input-output path considered. On the basis of this study, we propose and demonstrate experimentally, by femtosecond laser writing, directional couplers that are free from this problem and also yield a polarization independent power-splitting ratio. More in detail, we devise two different approaches to realize such devices: the first one is based on local birefringence engineering, while the second one exploits ultra-low birefringence waveguides obtained by thermal annealing. 
+
+#Energy Physics
+
+Vibrational spectroscopy has been widely employed to unravel physical-chemical properties of biological systems. Due to its high sensitivity to monitor real time "in situ" changes, Raman spectroscopy has been successfully employed, e.g., in biomedicine, metabolomics, and biomedical engineering. The grounds of interpretation of Raman spectra in these cases is the isolated macromolecules constituent vibrational assignment. Due to this, probe the anharmonic interactions or the mutual interactions among specific moieties/side chains to name but a few is a challenge. We present a complete vibrational modes calculation for connective tissue in the fingerprint region ( $800-1800$ cm $^{-1}$ ) using first-principles Density Functional Theory.
+
+#Distributed
+
+The research on deep reinforcement learning which estimates Q-value by deep learning has been attracted the interest of researchers recently. In deep reinforcement learning, it is important to efficiently learn the experiences that an agent has collected by exploring environment. In this research, we propose NEC2DQN that improves learning speed of a poor sample efficiency algorithm such as DQN by using good one such as NEC at the beginning of learning. We show it is able to learn faster than Double DQN or N-step DQN in the experiments of Pong. 
+
+#Crypto
+
+In this paper, we address referring expression comprehension: localizing an image region described by a natural language expression. While most recent work treats expressions as a single unit, we propose to decompose them into three modular components related to subject appearance, location, and relationship to other objects. This allows us to flexibly adapt to expressions containing different types of information in an end-to-end framework. In our model, which we call the Modular Attention Network (MAttNet), two types of attention are utilized: language-based attention that learns the module weights as well as the word/phrase attention that each module should focus on; and visual attention that allows the subject and relationship modules to focus on relevant image components. Module weights combine scores from all three modules dynamically to output an overall score.
