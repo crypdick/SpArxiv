@@ -1,3 +1,7 @@
+"""
+open a saved Markov model and generate sentences
+"""
+
 import markovify
 import tkinter as tk
 from tkinter import filedialog

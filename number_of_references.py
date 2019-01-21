@@ -1,3 +1,7 @@
+"""
+produces CSV with # references for each publication
+"""
+
 import csv
 from TexSoup import TexSoup
 import os
